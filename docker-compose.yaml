@@ -1,0 +1,17 @@
+version: "3.2"
+services:
+  rabbitmq:
+    hostname: rabbitmq
+    image: rabbitmq:3-management
+    container_name: 'rabbitmq-01'
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ~/.docker-conf/rabbitmq/log:/var/log/rabbitmq
+      - ~/.docker-conf/rabbitmq/data:/var/lib/rabbitmq/mnesia
+    networks:
+      - rabbitmq_go_net
+networks:
+  rabbitmq_go_net:
+    driver: bridge
