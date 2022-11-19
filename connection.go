@@ -1,4 +1,4 @@
-package qmanger
+package qmanager
 
 import (
 	"errors"

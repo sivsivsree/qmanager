@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	amqp "github.com/rabbitmq/amqp091-go"
-	"github.com/sivsivsree/qmanger"
+	"github.com/sivsivsree/qmanager"
 	"strconv"
 	"sync/atomic"
 	"time"
@@ -13,12 +13,12 @@ import (
 var consumerSeq uint64
 
 type Consumer struct {
-	conn     qmanger.Connector
+	conn     qmanager.Connector
 	consumer string
 	ticker   *time.Ticker
 }
 
-func New(connection qmanger.Connector, consumer string) *Consumer {
+func New(connection qmanager.Connector, consumer string) *Consumer {
 	return &Consumer{
 		conn:     connection,
 		consumer: consumer,

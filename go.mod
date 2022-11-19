@@ -1,4 +1,4 @@
-module github.com/sivsivsree/qmanger
+module github.com/sivsivsree/qmanager
 
 go 1.19
 

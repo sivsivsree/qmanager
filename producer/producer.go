@@ -4,16 +4,16 @@ import (
 	"context"
 	"errors"
 	amqp "github.com/rabbitmq/amqp091-go"
-	"github.com/sivsivsree/qmanger"
+	"github.com/sivsivsree/qmanager"
 )
 
 var ErrPublishing = errors.New("publishing failed")
 
 type Publisher struct {
-	conn qmanger.Connector
+	conn qmanager.Connector
 }
 
-func New(connection qmanger.Connector) *Publisher {
+func New(connection qmanager.Connector) *Publisher {
 	return &Publisher{
 		connection,
 	}
@@ -23,7 +23,7 @@ func (p *Publisher) Publish(ctx context.Context, queueName string, data []byte) 
 
 	ch, err := p.conn.GetChannel()
 	if err != nil {
-		return qmanger.ErrChannel
+		return qmanager.ErrChannel
 	}
 	defer func(ch *amqp.Channel) {
 		_ = ch.Close()
