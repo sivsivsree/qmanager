@@ -114,8 +114,9 @@ connect:
 			if d.Body != nil {
 				err := processIncoming(d.Body)
 				if err == nil {
-					go processError(errCh, err, d.Body)
 					_ = d.Ack(false)
+				} else {
+					go processError(errCh, err, d.Body)
 				}
 			}
 		case <-c.ticker.C:
