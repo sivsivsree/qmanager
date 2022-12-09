@@ -80,6 +80,10 @@ connect:
 	}
 }
 
+// ConsumeWithError will return the consume error in consume channel,
+// The message will be discarded from the queue, thus depends on the implementation of proper erorr handling
+// inorder to not lose the message. It is to be noted the message will be retried on time and if the error exists again,
+// it will be NACK with requeue=false
 func (c Consumer) ConsumeWithError(ctx context.Context, queue string, errCh chan<- ConsumeErr, processIncoming func(data []byte) error) error {
 
 connect:
@@ -117,6 +121,12 @@ connect:
 					_ = d.Ack(false)
 				} else {
 					go processError(errCh, err, d.Body)
+					if d.Redelivered {
+						_ = d.Nack(false, true)
+					} else {
+						_ = d.Nack(false, false)
+					}
+
 				}
 			}
 		case <-c.ticker.C:
